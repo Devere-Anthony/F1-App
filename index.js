@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 3000;
 
 // database connection
 mongoose.connect('mongodb+srv://admin:f1cr-ims@cosc612ait624.6muyrax.mongodb.net/');
-mongoose.connection(uri)
+//mongoose.connection(uri)
 const db = mongoose.connection;
 db.on("error", (error) => console.log(error));
 db.once("open", () => console.log("Connected to the database!"));
