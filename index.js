@@ -10,8 +10,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // connect to remote database
-const uri = "mongodb+srv://dawresearch:<RgKcegBpllj4XWDf>@f1-cluster.q5oqrw9.mongodb.net/?retryWrites=true&w=majority"
-
+const uri = process.env.MONGODB_URI;
 
 // database connection
 //mongoose.connect('mongodb+srv://admin:f1cr-ims@cosc612ait624.6muyrax.mongodb.net/');
