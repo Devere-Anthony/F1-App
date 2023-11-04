@@ -10,11 +10,11 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // connect to remote database
-const uri = process.env.MONGODB_URI;
+//const uri = process.env.MONGODB_URI;
 
 // database connection
-//mongoose.connect('mongodb+srv://admin:f1cr-ims@cosc612ait624.6muyrax.mongodb.net/');
-mongoose.connect(uri)
+mongoose.connect('mongodb+srv://admin:f1cr-ims@cosc612ait624.6muyrax.mongodb.net/');
+//mongoose.connect(uri)
 const db = mongoose.connection;
 db.on("error", (error) => console.log(error));
 db.once("open", () => console.log("Connected to the database!"));
