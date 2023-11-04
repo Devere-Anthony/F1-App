@@ -7,8 +7,8 @@ const methodOverride = require('method-override');
 const { flash } = require('express-flash-message');
 
 const app = express();
-//const PORT = process.env.PORT || 3000;
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
+//const PORT = 3000;
 
 
 // database connection
