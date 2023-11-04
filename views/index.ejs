@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title> Products | F1 Coffee Roasters IMS </title>
+    <link rel="stylesheet" href="/stylesheets/styles.css" type="text/css" />
+</head>
+
+<body>
+    <div id="backdrop"></div>
+    <header>
+        <nav id="navbar">
+            <div class="mainMenu">
+                <div class="nonDrop">
+                    <button id="buttonDrop">Products</button>
+                </div>
+                <div class="nonDrop">
+                    <button class="defaultBtn" onclick="window.location.href='/clientOrders'">Client Orders</button>
+                </div>
+                <div class="nonDrop">
+                    <button class="defaultBtn" onclick="window.location.href='/stockOrders'">Stock Orders</button>
+                </div>
+                <!--needs farms ejs-->
+                <div class="nonDrop">
+                    <div class="nonDrop">
+                        <button class="defaultBtn" onclick="window.location.href='/farms'">Farms</button>
+                    </div>
+                </div>
+                <!--needs login ejs-->
+                <div id="logout">
+                    <button class="logout" onclick="window.location.href='/login'">Logout</button>
+                </div>
+        </nav>
+        <div class="banner">
+            <!--coffee bag by supalerk laipawat from Noun Project (CC BY 3.0)-->
+            <img src="logoF1CR.png" id="logo">
+            <span>F1 Coffee Roasters IMS</span>
+        </div>
+    </header>
+    <br />
+    <br />
+    <!--Insert EJS notification for Product added successfully-->
+    <main>
+        <h3 id="page">F1 Coffee Roasters IMS - Products
+            <button class="logout" onclick="window.location.href='/addProduct'"
+                style="float:right;margin-right: 20px;">Add
+                Product</button>
+            <!--Search Product not yet active-->
+            <input type="search" class="logout" placeholder="Search Product" style="float:right;margin-right: 20px;">
+        </h3>
+        <br>
+        <div class="mainTable">
+            <form>
+                <table class="table" id="productList">
+                    <thead>
+                        <tr>
+                            <th>Product ID</th>
+                            <th>Name</th>
+                            <th>Barcode</th>
+                            <th>Category</th>
+                            <th>Retail Price</th>
+                            <th>Wholesale Price</th>
+                            <th>Current Qty</th>
+                            <th style="text-align: center;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% products.forEach(element=> { %>
+                            <tr>
+                                <td>
+                                    <%= element.productID %>
+                                </td>
+                                <td>
+                                    <%= element.productName %>
+                                </td>
+                                <td>
+                                    <%= element.barcode %>
+                                </td>
+                                <td>
+                                    <%= element.category %>
+                                </td>
+                                <td>
+                                    <%= element.retail %>
+                                </td>
+                                <td>
+                                    <%= element.wholesale %>
+                                </td>
+                                <td>
+                                    <%= element.currentQuantity %>
+                                </td>
+                                <td>
+                                    <a href="/setStockProduct/<%= element._id %>" type="button" class="logout">Edit</a>
+                                    <a href="/fulfillOrder/<%= element._id %>" type="button" class="logout">Order</a>
+                                </td>
+                            </tr>
+                            <% }) %>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </main>
+</body>
+<br />
+<br />
+
+
+
+</html>

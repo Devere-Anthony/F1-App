@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Edit Product | F1 Coffee Roasters IMS</title>
+    <link rel="stylesheet" href="/stylesheets/styles.css" type="text/css" />
+</head>
+
+<body>
+    <div id="backdrop"></div>
+    <header>
+        <nav id="navbar">
+            <div class="mainMenu">
+                <div class="firstDrop">
+                    <div class="dropMenu">
+                        <a href="\"><button id="buttonDrop">Products</button></a>
+                    </div>
+                </div>
+                <div class="nonDrop">
+                    <button class="defaultBtn" onclick="window.location.href='/clientOrders'">Client Orders</button>
+                </div>
+                <div class="nonDrop">
+                    <button class="defaultBtn" onclick="window.location.href='/stockOrders'">Stock Orders</button>
+                </div>
+                <div class="nonDrop">
+                    <div class="nonDrop">
+                        <button class="defaultBtn" onclick="window.location.href='/farms'">Farms</button>
+                    </div>
+                </div>
+
+                <div id="logout">
+                    <button class="logout" onclick="window.location.href='/login'">Logout</button>
+                </div>
+        </nav>
+        <div class="banner">
+            <span>F1 Coffee Roasters IMS</span>
+        </div>
+    </header>
+    <br>
+    <br>
+    <main>
+        <h3 id="page">F1 Coffee Roasters IMS - Edit Product
+            <a href="\"><button class="logout" style="float:right;margin-right: 20px;">Cancel</button></a>
+            <a href="\"><button class="logout" style="float:right;margin-right: 20px;">Inactivate</button></a>
+        </h3>
+        <br />
+        <div class=" mainTable">
+            <table class="table">
+                <br />
+                <br />
+                <form action="/setStockProduct/<%= products._id %>?_method=PUT" method="POST">
+                    <fieldset>
+                        <legend>Product Specifications</legend>
+                        <br />
+                        <div>
+                            <label>Product ID:</label>
+                            <input type="text" name="productID" required="required" id="productID" placeholder="1000" value="<%= products.productID %>"/>
+                        </div>
+                        <br />
+                        <br />
+                        <div> <label>Product Name:</label>
+                            <input type="text" name="productName" required="required" id="productName"
+                                placeholder="Ethiopian Natural" value="<%= products.productName %>"/>
+                        </div>
+                        <br />
+                        <br />
+                        <div><label>Barcode:</label>
+                            <input type="text" name="barcode" id="barcode" required="required" placeholder="8095632" value="<%= products.barcode %>"/>
+                        </div>
+                        <br />
+                        <br />
+                        <div>
+                            <label for="category">Roast Category:</label>
+                            <select id="category" value="<%= products.category %>">
+                                <option value="light">Light Roast</option>
+                                <option value="medium">Medium Roast</option>
+                                <option value="dark">Dark Roast</option>
+                            </select>
+                        </div>
+                        <br />
+                        <br />
+                        <div>
+                            <label>Retail Price:</label>
+                            <input type="text" name="retail" required="required" id="retail" placeholder="12.00" value="<%= products.retail %>"/>
+                        </div>
+                        <br />
+                        <br />
+                        <div>
+                            <label>Wholesale Price:</label>
+                            <input type="text" name="wholesale" required="required" id="wholesale"
+                                placeholder="10.00" value="<%= products.wholesale %>"/>
+                        </div>
+                        <br />
+                        <br />
+                        <div>
+                            <label>Quantity:</label>
+                            <input type="number" name="quantity" required="required" id="quantity" placeholder="0" value="<%= products.quantity %>"/>
+                        </div>
+                        <br />
+                        <br />
+                        <div>
+                            <label for="autorestock">Enable auto restock:</label>
+                            <input type="checkbox" id="autorestock" name="autorestock" value="<%= products.autorestock %>" checked />
+                        </div>
+                        <br />
+                        <br />
+                        <div>
+                            <label>Maximum Threshold:</label>
+                            <input type="range" value="<%= products.max %>" min="1" max="100" oninput="this.nextElementSibling.value = this.value">
+                            <output><%= products.max %></output>
+                        </div>
+                        <br />
+                        <br />
+                        <div>
+                            <label>Minimum Threshold:</label>
+                            <input type="range" value="<%= products.min %>" min="0" max="100" oninput="this.nextElementSibling.value = this.value">
+                            <output><%= products.min %></output>
+                        </div>
+                        <br />
+                        <br />
+                        <div>
+                            <input type="submit" name="submit" value="Edit Product" class="logout"
+                                style="float:right;margin-right: 20px;"></button>
+                        </div>
+                    </fieldset>
+                </form>
+        </div>
+    </main>
+</body>
+
+</html>

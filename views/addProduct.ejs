@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Products | F1 Coffee Roasters IMS</title>
+    <link rel="stylesheet" href="/stylesheets/styles.css" type="text/css" />
+</head>
+
+<body>
+    <div id="backdrop"></div>
+    <header>
+        <nav id="navbar">
+            <div class="mainMenu">
+                <div class= "nonDrop">
+                    <div>
+                        <a href="\"><button id="buttonDrop">Products</button></a>
+                    </div>
+                </div>
+                <div class="nonDrop">
+                    <button class="defaultBtn" onclick="window.location.href='/clientOrders'">Client Orders</button>
+                </div>
+                <div class="nonDrop">
+                    <button class="defaultBtn" onclick="window.location.href='/stockOrders'">Stock Orders</button>
+                </div>
+                <div class="nonDrop">
+                    <div class="nonDrop">
+                        <button class="defaultBtn" onclick="window.location.href='/farms'">Farms</button>
+                    </div>
+                </div>
+
+                <div id="logout">
+                    <button class="logout" onclick="window.location.href='/login'">Logout</button>
+                </div>
+        </nav>
+        <div class="banner">
+            <!--coffee bag by supalerk laipawat from Noun Project (CC BY 3.0)-->
+            <a href="https://thenounproject.combr/owse/icons/term/coffee-bag/"><img src="logoF1CR.png" id="logo"></a>
+            <span>F1 Coffee Roasters IMS</span>
+        </div>
+    </header>
+    <br>
+    <br>
+    <main>
+        <h3 id="page">F1 Coffee Roasters IMS - Add Product
+            <a href="\"><button class="logout" style="float:right;margin-right: 20px;">Cancel</button></a>
+        </h3>
+        <br />
+        <div class=" mainTable">
+            <table class="table">
+                <br />
+                <br />
+                <form action="/addProduct" method="POST">
+                    <fieldset>
+                        <legend>Product Specifications</legend>
+                        <br />
+                        <div>
+                            <label for="productID">Product ID:</label>
+                            <input type="text" name="productID" required id="productID" placeholder="1000" />
+                        </div>
+                        <br />
+                        <br />
+                        <div> <label for="productName">Product Name:</label>
+                            <input type="text" name="productName" required id="productName"
+                                placeholder="Ethiopian Natural" />
+                        </div>
+                        <br />
+                        <br />
+                        <div><label>Barcode:</label>
+                            <input type="text" name="barcode" id="barcode" required placeholder="8095632" />
+                        </div>
+                        <br />
+                        <br />
+                        <div>
+                            <label for="category">Roast Category:</label>
+                            <select id="category" name="category">
+                                <option value="Light Roast">Light Roast</option>
+                                <option value="Medium Roast">Medium Roast</option>
+                                <option value="Dark Roast">Dark Roast</option>
+                            </select>
+                        </div>
+                        <br />
+                        <br />
+                        <div>
+                            <label for="retail">Retail Price:</label>
+                            <input type="text" name="retail" required id="retail" placeholder="12.00" />
+                        </div>
+                        <br />
+                        <br />
+                        <div>
+                            <label for="wholesale">Wholesale Price:</label>
+                            <input type="text" name="wholesale" required id="wholesale"
+                                placeholder="10.00" />
+                        </div>
+                        <br />
+                        <br />
+                        <div>
+                            <label for="quantity">Quantity:</label>
+                            <input type="number" name="quantity" required id="quantity" placeholder="0" />
+                        </div>
+                        <br />
+                        <br />
+                        <div>
+                            <label for="autorestock">Enable auto restock:</label>
+                            <input type="checkbox" id="autorestock" name="autorestock" value="enabled" checked />
+                        </div>
+                        <br />
+                        <br />
+                        <div>
+                            <label for="max">Maximum Threshold:</label>
+                            <input type="range" value="100" min="1" max="100" oninput="this.nextElementSibling.value = this.value">
+                            <output>100</output>
+                        </div>
+                        <br />
+                        <br />
+                        <div>
+                            <label for="min">Minimum Threshold:</label>
+                            <input type="range" value="0" min="0" max="100" oninput="this.nextElementSibling.value = this.value">
+                            <output>0</output>
+                        </div>
+                        <br />
+                        <br />
+                        <div>
+                            <input type="submit" name="submit" class="logout" value="Add Product"
+                                style="float:right;margin-right: 20px;"></button>
+                        </div>
+                    </fieldset>
+                </form>
+        </div>
+    </main>
+    <!-- <script>
+        document.querySelector('form').addEventListener('submit', function (event) {
+            const productID = document.querySelector('input[name="productID"]').value;
+            const productName = document.querySelector('input[name="productName"]').value;
+            const barcode = document.querySelector('input[name="barcode"]').value;
+            const category = document.querySelector('input[name="category"]').value;
+            const retail = document.querySelector('input[name="retail"]').value;
+            const wholesale = document.querySelector('input[name="wholesale"]').value;
+            const quantity = document.querySelector('input[name="quantity"]').value;
+            const max = document.querySelector('input[name="max"]').value;
+            const min = document.querySelector('input[name="min"]').value;
+            const avail = document.querySelector('input[name="avail"]').value;
+            // Validate other fields here
+
+            if (!productID || !productName || !barcode || !category || !retail || !wholesale || !quantity || !max || !min || !avail) {
+                event.preventDefault(); // Prevent the form from submitting
+                alert('Please fill in all required fields.');
+            }
+        });
+    </script>-->
+</body>
+
+</html>

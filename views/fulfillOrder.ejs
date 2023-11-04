@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Fulfill Client Orders | F1 Coffee Roasters IMS</title>
+    <link rel="stylesheet" href="/stylesheets/styles.css" type="text/css" />
+</head>
+
+<body>
+    <div id="backdrop"></div>
+    <header>
+        <nav id="navbar">
+            <div class="mainMenu">
+                <div class="firstDrop">
+                    <div class="dropMenu">
+                        <a href="/"><button id="buttonDrop">Products</button></a>
+                    </div>
+                </div>
+                <div class="nonDrop">
+                    <button class="defaultBtn" onclick="window.location.href='/clientOrders'">Client Orders</button>
+                </div>
+                <div class="nonDrop">
+                    <button class="defaultBtn" onclick="window.location.href='/stockOrders'">Stock Orders</button>
+                </div>
+                <div class="nonDrop">
+                    <div class="nonDrop">
+                        <button class="defaultBtn" onclick="window.location.href='/farms'">Farms</button>
+                    </div>
+                </div>
+
+                <div id="logout">
+                    <button class="logout" onclick="window.location.href='/login'">Logout</button>
+                </div>
+        </nav>
+        <div class="banner">
+            <!--coffee bag by supalerk laipawat from Noun Project (CC BY 3.0)-->
+            <a href="https://thenounproject.combr/owse/icons/term/coffee-bag/"><img src="logoF1CR.png" id="logo"></a>
+            <span>F1 Coffee Roasters IMS</span>
+        </div>
+    </header>
+    <br>
+    <br>
+    <main>
+        <h3 id="page">F1 Coffee Roasters IMS - Fulfill Client Orders
+            <a href="\"><button class="logout" style="float:right;margin-right: 20px;">Cancel</button></a>
+        </h3>
+        <br>
+        <div class="mainTable">
+            <form action="/fulfillOrder" method="POST">
+                <table class="table" id="fulfillOrder">
+                    <fieldset>
+                        <br />
+                        <legend>Fulfill Client Orders</legend>
+                        <br />
+                        <div>
+                            <label>Product ID:</label>
+                            <input type="text" name="productID" required="required" id="productID" placeholder="1000"
+                                value="<%= products.productID %>" />
+                        </div>
+                        <br />
+                        <div>
+                            <label>Current Stock Quantity:</label>
+                            <input type="number" name="quantity" required="required" id="quantity" placeholder="0"
+                                value="<%= products.quantity %>" />
+                        </div>
+                        <br />
+                        <div>
+                            <label>Client Order ID:</label>
+                            <input type="text" name="clientorderID" required="required" id="clientorderID"
+                                placeholder="1000" />
+                        </div>
+                        <br />
+                        <div>
+                            <label>Order Quantity:</label>
+                            <input type="number" name="corderquantity" placeholder="Enter valid quantity">
+                        </div>
+                        <br />
+                        <div>
+                            <input type="submit" name="submit" class="logout" value="Fulfill Order"
+                                style="float:right;margin-right: 20px;"></button>
+                        </div>
+                    </fieldset>
+            </form>
+        </div>
+    </main>
+</body>
+
+</html>
