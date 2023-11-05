@@ -9,12 +9,8 @@ const { flash } = require('express-flash-message');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// connect to remote database
-//const uri = process.env.MONGODB_URI;
-
 // database connection
-mongoose.connect('mongodb+srv://admin:f1cr-ims@cosc612ait624.6muyrax.mongodb.net/');
-//mongoose.connect(uri)
+mongoose.connect('mongodb+srv://dawresearch:RgKcegBpllj4XWDf@f1-cluster.q5oqrw9.mongodb.net/');
 const db = mongoose.connection;
 db.on("error", (error) => console.log(error));
 db.once("open", () => console.log("Connected to the database!"));
@@ -25,7 +21,7 @@ app.use(express.json());
 app.use(methodOverride('_method'));
 
 // static
-const path = require ('path');
+const path = require('path');
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Express Session
@@ -34,9 +30,6 @@ app.use(
         secret: 'f1cr-ims',
         saveUninitialized: true,
         resave: false,
-        cookie: {
-            maxAge: 1000 * 60 * 60 * 24 * 21
-        }
     })
 );
 

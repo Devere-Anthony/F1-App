@@ -72,11 +72,11 @@
                         <br />
                         <div>
                             <label for="category">Roast Category:</label>
-                            <select id="category" value="<%= products.category %>">
-                                <option value="light">Light Roast</option>
-                                <option value="medium">Medium Roast</option>
-                                <option value="dark">Dark Roast</option>
-                            </select>
+                            <select id="category" name="category">
+                                <option value="Light Roast" <%= products.category === 'Light Roast' ? 'selected' : '' %>>Light Roast</option>
+                                <option value="Medium Roast" <%= products.category === 'Medium Roast' ? 'selected' : '' %>>Medium Roast</option>
+                                <option value="Dark Roast" <%= products.category === 'Dark Roast' ? 'selected' : '' %>>Dark Roast</option>
+                            </select>                            
                         </div>
                         <br />
                         <br />
@@ -106,15 +106,15 @@
                         <br />
                         <br />
                         <div>
-                            <label>Maximum Threshold:</label>
-                            <input type="range" value="<%= products.max %>" min="1" max="100" oninput="this.nextElementSibling.value = this.value">
+                            <label for="max">Maximum Threshold:</label>
+                            <input type="range" name="maxstock" value="<%= products.maxstock %>" min="1" max="100" oninput="this.nextElementSibling.value = this.value">
                             <output><%= products.max %></output>
                         </div>
                         <br />
                         <br />
                         <div>
-                            <label>Minimum Threshold:</label>
-                            <input type="range" value="<%= products.min %>" min="0" max="100" oninput="this.nextElementSibling.value = this.value">
+                            <label for="min">Minimum Threshold:</label>
+                            <input type="range" name="minstock" value="<%= products.minstock %>" min="0" max="100" oninput="this.nextElementSibling.value = this.value">
                             <output><%= products.min %></output>
                         </div>
                         <br />

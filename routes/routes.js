@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const uuid = require('uuid')
 const products = require('../models/products');
 const clientOrders = require('../models/clientOrders');
 const stockOrders = require('../models/stockOrders')
@@ -8,7 +9,9 @@ const stockOrders = require('../models/stockOrders')
 router.get('/', async (req, res) => {
     try {
         const allProducts = await products.find();
-        res.render('index', { products: allProducts });
+        const allClientOrders = await clientOrders.find();
+        const allStockOrders = await stockOrders.find();
+        res.render('index', { products: allProducts, clientOrders: allClientOrders, stockOrders: allStockOrders });
     } catch (error) {
         console.log(error);
     }
@@ -25,26 +28,38 @@ router.post('/addProduct', async (req, res) => {
     console.log(req.body);
 
     const newProduct = new products({
-        productID: req.body.productID,
+        productID: uuid.v4(),
         productName: req.body.productName,
         barcode: req.body.barcode,
         category: req.body.category,
         retail: req.body.retail,
         wholesale: req.body.wholesale,
         quantity: req.body.quantity,
-        max: req.body.max,
-        min: req.body.min,
-        avail: req.body.avail,
+        autorestock: req.body.autorestock,
+        maxstock: req.body.maxstock,
+        minstock: req.body.minstock,
     });
 
-    try {
-        await newProduct.save();
-        await req.flash('info', 'Product added successfully!');
-        res.redirect('/');
-    } catch (error) {
-        console.log(error);
+    // Explicitly validate the newProduct before attempting to save it
+    const validationError = newProduct.validateSync();
+
+    if (validationError) {
+        // Handle validation error here
+        console.error(validationError);
+        // You can return an error message or redirect back to the form with an error message.
+        await req.flash('error', validationError.message);
+        res.redirect('/addProduct');
+    } else {
+        try {
+            await newProduct.save();
+            await req.flash('info', 'Product added successfully!');
+            res.redirect('/');
+        } catch (error) {
+            console.error(error);
+        }
     }
 });
+
 
 // Edit Product Page
 router.get('/setStockProduct/:id', async (req, res) => {
@@ -67,9 +82,9 @@ router.put('/setStockProduct/:id', async (req, res) => {
             retail: req.body.retail,
             wholesale: req.body.wholesale,
             quantity: req.body.quantity,
-            max: req.body.max,
-            min: req.body.min,
-            avail: req.body.avail,
+            autorestock: req.body.autorestock,
+            maxstock: req.body.maxstock,
+            minstock: req.body.minstock,
         });
         res.redirect(`/`);
     } catch (error) {
@@ -79,7 +94,22 @@ router.put('/setStockProduct/:id', async (req, res) => {
 
 // Stock Order
 router.get('/stockOrders', async (req, res) => {
-    res.render('stockOrders');
+    try {
+        const allStockOrders = await stockOrders.find();
+        res.render('stockOrders', { stockOrders: allStockOrders });
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+// Client Order
+router.get('/clientOrders', async (req, res) => {
+    try {
+        const allClientOrders = await clientOrders.find();
+        res.render('clientOrders', { clientOrders: allClientOrders });
+    } catch (error) {
+        console.log(error);
+    }
 });
 
 // Fulfill client order page
@@ -96,21 +126,51 @@ router.get('/fulfillOrder/:id', async (req, res) => {
 router.post('/fulfillOrder', async (req, res) => {
     console.log(req.body);
 
-    const newclientOrder = new clientOrders({
-        clientorderID: req.body.clientorderID,
-        productID: req.body.productID,
-        corderquantity: req.body.corderquantity,
-        quantity: req.body.quantity,
-        date: req.body.date,
-    });
-
     try {
+        // Step 1: Get product info
+        const currentProductDetails = await products.findOne({ productID: req.body.productID });
+
+        if (!currentProductDetails) {
+            return res.sendStatus(404);
+        }
+
+        // Step 2: Project new quantity
+        const projectedStockQuantity = currentProductDetails.quantity - req.body.corderquantity;
+
+        // Step 3: Fulfill order by saving a new fulfillment record
+        const newclientOrder = new clientOrders({
+            clientorderID: uuid.v4(),
+            productID: req.body.productID,
+            corderquantity: req.body.corderquantity,
+            date: req.body.date,
+            quantity: projectedStockQuantity, // Update the quantity field with projectedStockQuantity
+        });
+
         await newclientOrder.save();
+
+        // Step 4: Update product document data with projected stock quantity
+        currentProductDetails.projectedStockQuantity = projectedStockQuantity;
+        await currentProductDetails.save(); // Save the updated product document
+
+        // Step 5: Create a new stockOrders object when necessary
+        if (currentProductDetails.autorestock === 'enabled' && projectedStockQuantity <= currentProductDetails.minstock) {
+            const newStockOrder = new stockOrders({
+                stockorderID: uuid.v4(),
+                date: new Date(),
+                productID: req.body.productID,
+                sorderquantity: currentProductDetails.maxstock - projectedStockQuantity,
+            });
+            await newStockOrder.save();
+        }
+
         res.redirect('/');
     } catch (error) {
         console.log(error);
+        return res.sendStatus(500);
     }
 });
+
+
 
 
 module.exports = router;

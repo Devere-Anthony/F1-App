@@ -35,7 +35,7 @@
         </nav>
         <div class="banner">
             <!--coffee bag by supalerk laipawat from Noun Project (CC BY 3.0)-->
-            <a href="https://thenounproject.combr/owse/icons/term/coffee-bag/"><img src="logoF1CR.png" id="logo"></a>
+            <a href="https://thenounproject.combr/owse/icons/term/coffee-bag/"><img src="logoF1CR.png" class="logo"></a>
             <span>F1 Coffee Roasters IMS</span>
         </div>
     </header>
@@ -55,25 +55,19 @@
                         <br />
                         <div>
                             <label>Product ID:</label>
-                            <input type="text" name="productID" required="required" id="productID" placeholder="1000"
+                            <input type="text" name="productID" required id="productID" placeholder="1000"
                                 value="<%= products.productID %>" />
                         </div>
                         <br />
                         <div>
                             <label>Current Stock Quantity:</label>
-                            <input type="number" name="quantity" required="required" id="quantity" placeholder="0"
+                            <input type="number" name="quantity" required id="quantity" placeholder="0"
                                 value="<%= products.quantity %>" />
                         </div>
                         <br />
                         <div>
-                            <label>Client Order ID:</label>
-                            <input type="text" name="clientorderID" required="required" id="clientorderID"
-                                placeholder="1000" />
-                        </div>
-                        <br />
-                        <div>
                             <label>Order Quantity:</label>
-                            <input type="number" name="corderquantity" placeholder="Enter valid quantity">
+                            <input type="number" name="corderquantity" required placeholder="Enter valid quantity">
                         </div>
                         <br />
                         <div>

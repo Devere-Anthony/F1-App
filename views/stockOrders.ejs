@@ -35,7 +35,7 @@
         </nav>
         <div class="banner">
             <!--coffee bag by supalerk laipawat from Noun Project (CC BY 3.0)-->
-            <a href="https://thenounproject.combr/owse/icons/term/coffee-bag/"><img src="logoF1CR.png" id="logo"></a>
+            <a href="https://thenounproject.combr/owse/icons/term/coffee-bag/"><img src="logoF1CR.png" class="logo"></a>
             <span>F1 Coffee Roasters IMS</span>
         </div>
     </header>
@@ -52,19 +52,29 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Order ID</th>
+                                <th>Stock Order ID</th>
                                 <th>Product ID</th>
                                 <th>Quantity</th>
                                 <th>Date</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>1000</td>
-                                <td>10</td>
-                                <td>2023-10-09 12:00:14</td>
-                            </tr>
+                            <% stockOrders.forEach(element=> { %>
+                                <tr>
+                                    <td>
+                                        <%= element.stockorderID %>
+                                    </td>
+                                    <td>
+                                        <%= element.productID %>
+                                    </td>
+                                    <td>
+                                        <%= element.sorderquantity %>
+                                    </td>
+                                    <td>
+                                        <%= element.date %>
+                                    </td>
+                                </tr>
+                                <% }) %>
                         </tbody>
                     </table>
                 </form>

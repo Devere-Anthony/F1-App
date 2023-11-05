@@ -34,7 +34,7 @@
         </nav>
         <div class="banner">
             <!--coffee bag by supalerk laipawat from Noun Project (CC BY 3.0)-->
-            <img src="logoF1CR.png" id="logo">
+            <img src="logoF1CR.png" class="logo">
             <span>F1 Coffee Roasters IMS</span>
         </div>
     </header>
@@ -86,8 +86,13 @@
                                 <td>
                                     <%= element.wholesale %>
                                 </td>
-                                <td>
-                                    <%= element.currentQuantity %>
+                                <td> <!-- Check if projectedStockQuantity exists and is not null -->
+                                    <% if (element.projectedStockQuantity !=null) { %>
+                                        <%= element.projectedStockQuantity %>
+                                            <% } else { %>
+                                                <!-- Handle the case when projectedStockQuantity is not available -->
+                                                <%= element.quantity %>
+                                                    <% } %>
                                 </td>
                                 <td>
                                     <a href="/setStockProduct/<%= element._id %>" type="button" class="logout">Edit</a>
@@ -103,7 +108,5 @@
 </body>
 <br />
 <br />
-
-
 
 </html>

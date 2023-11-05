@@ -1,19 +1,23 @@
 const mongoose = require('mongoose');
 
-// Conditions have been met but does not notify user through UI
 const Schema = mongoose.Schema;
+
+const quantityValidator = function (value) {
+    return value >= 0 && value <= this.maxstock;
+};
+
+const maxstockValidator = function (value) {
+    return value >= 0 && value >= this.minstock;
+};
+
 const productsSchema = new Schema({
     productID: {
         type: String,
-        unique: true,
-        minLength: [3, "Must be at least 3 characters"],
-        maxLength: 20,
         immutable: true
     },
     productName: {
         type: String,
-        unique: [true, "Name must be unique"],
-        minLength: [3, "Must be at least 3 characters"],
+        minLength: [3, 'Must be at least 3 characters'],
         maxLength: 20
     },
     barcode: {
@@ -35,40 +39,27 @@ const productsSchema = new Schema({
     },
     quantity: {
         type: Number,
-        validate: {
-            validator: function (value) {
-                // Validate that 'quantity' is less than or equal to 'max'
-                return value <= this.max;
-            },
-            message: 'Quantity must not exceed the maximum allowed quantity.'
-        }
+        validate: [quantityValidator, 'Quantity must be between 0 and maximum threshold']
+    },
+    projectedStockQuantity: {
+        type: Number,
     },
     autorestock: {
         type: String,
     },
-    max: {
+    maxstock: {
         type: Number,
         min: 1,
         max: 100,
-        default: 100,
-        validate: {
-            validator: function (value) {
-                // Validate that 'max' is greater than or equal to 'min'
-                return value >= this.min;
-            },
-            message: 'Max threshold must be greater than the minimum threshold.'
-        }
+        validate: [maxstockValidator, 'Maximum value must be greater that minimum threshold']
     },
-    min: {
+    minstock: {
         type: Number,
         min: 0,
         max: 100,
-        default: 0
     }
-}, {
-    toJSON: { virtuals: true },
-    toObject: { virtuals: true }
 });
+
 
 // schema model
 const products = mongoose.model('products', productsSchema);

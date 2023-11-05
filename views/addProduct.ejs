@@ -35,7 +35,7 @@
         </nav>
         <div class="banner">
             <!--coffee bag by supalerk laipawat from Noun Project (CC BY 3.0)-->
-            <a href="https://thenounproject.combr/owse/icons/term/coffee-bag/"><img src="logoF1CR.png" id="logo"></a>
+            <a href="https://thenounproject.combr/owse/icons/term/coffee-bag/"><img src="logoF1CR.png" class="logo"></a>
             <span>F1 Coffee Roasters IMS</span>
         </div>
     </header>
@@ -54,10 +54,6 @@
                     <fieldset>
                         <legend>Product Specifications</legend>
                         <br />
-                        <div>
-                            <label for="productID">Product ID:</label>
-                            <input type="text" name="productID" required id="productID" placeholder="1000" />
-                        </div>
                         <br />
                         <br />
                         <div> <label for="productName">Product Name:</label>
@@ -107,15 +103,15 @@
                         <br />
                         <br />
                         <div>
-                            <label for="max">Maximum Threshold:</label>
-                            <input type="range" value="100" min="1" max="100" oninput="this.nextElementSibling.value = this.value">
+                            <label for="maxstock">Maximum Threshold:</label>
+                            <input type="range" name="maxstock" value="100" min="1" max="100" oninput="this.nextElementSibling.value = this.value">
                             <output>100</output>
                         </div>
                         <br />
                         <br />
                         <div>
-                            <label for="min">Minimum Threshold:</label>
-                            <input type="range" value="0" min="0" max="100" oninput="this.nextElementSibling.value = this.value">
+                            <label for="minstock">Minimum Threshold:</label>
+                            <input type="range" name="minstock" value="0" min="0" max="100" oninput="this.nextElementSibling.value = this.value">
                             <output>0</output>
                         </div>
                         <br />
@@ -128,26 +124,6 @@
                 </form>
         </div>
     </main>
-    <!-- <script>
-        document.querySelector('form').addEventListener('submit', function (event) {
-            const productID = document.querySelector('input[name="productID"]').value;
-            const productName = document.querySelector('input[name="productName"]').value;
-            const barcode = document.querySelector('input[name="barcode"]').value;
-            const category = document.querySelector('input[name="category"]').value;
-            const retail = document.querySelector('input[name="retail"]').value;
-            const wholesale = document.querySelector('input[name="wholesale"]').value;
-            const quantity = document.querySelector('input[name="quantity"]').value;
-            const max = document.querySelector('input[name="max"]').value;
-            const min = document.querySelector('input[name="min"]').value;
-            const avail = document.querySelector('input[name="avail"]').value;
-            // Validate other fields here
-
-            if (!productID || !productName || !barcode || !category || !retail || !wholesale || !quantity || !max || !min || !avail) {
-                event.preventDefault(); // Prevent the form from submitting
-                alert('Please fill in all required fields.');
-            }
-        });
-    </script>-->
 </body>
 
 </html>
