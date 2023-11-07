@@ -137,6 +137,17 @@ router.post('/fulfillOrder', async (req, res) => {
         // Step 2: Project new quantity
         const projectedStockQuantity = currentProductDetails.quantity - req.body.corderquantity;
 
+        /* Here is where we shouldn't allow for invalid orders, 
+           so if the customer order quantity is greater than the current quantity,
+           then the order can't be fulfilled and we need to handle this issue
+           before allowing garbage data to populate the data store
+        */
+        if (projectedStockQuantity < 0){
+            res.redirect('/');
+            console.log("false");
+            return false;
+        }
+
         // Step 3: Fulfill order by saving a new fulfillment record
         const newclientOrder = new clientOrders({
             clientorderID: uuid.v4(),
@@ -162,8 +173,9 @@ router.post('/fulfillOrder', async (req, res) => {
             });
             await newStockOrder.save();
         }
-
         res.redirect('/');
+        console.log("true")
+        return true
     } catch (error) {
         console.log(error);
         return res.sendStatus(500);
