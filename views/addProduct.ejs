@@ -5,6 +5,14 @@
     <meta charset="UTF-8" />
     <title>Products | F1 Coffee Roasters IMS</title>
     <link rel="stylesheet" href="/stylesheets/styles.css" type="text/css" />
+    <script>
+        function addProduct() {
+            if (confirm("Are you sure you want to add this product?"))
+            {
+               return window.location.href = '/';
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -50,7 +58,7 @@
             <table class="table">
                 <br />
                 <br />
-                <form action="/addProduct" method="POST">
+                <form action="/addProduct" method="POST" onsubmit="return addProduct()">
                     <fieldset>
                         <legend>Product Specifications</legend>
                         <br />
