@@ -6,11 +6,45 @@
     <title>Products | F1 Coffee Roasters IMS</title>
     <link rel="stylesheet" href="/stylesheets/styles.css" type="text/css" />
     <script>
-        function addProduct() {
-            if (confirm("Are you sure you want to add this product?"))
-            {
-               return window.location.href = '/';
+        // confirms the max value is greater than the min value
+        function confirmMax() {
+            var max = document.getElementById("maxstock").value;
+            var min = document.getElementById("minstock").value;
+            if (max < min) {
+                alert("Maximum threshold must be greater than minimum threshold.");
+                return false;
             }
+            else {
+                return confirmAdd();
+            }
+        }
+        // confirms the quantity is less than the max value
+        function confirmQuantity() {
+            var max = document.getElementById("maxstock").value;
+            var quantity = document.getElementById("quantity").value;
+            if (quantity > max) {
+                alert("Quantity must be less than the maximum threshold.");
+                return false;
+            }
+            else {
+                return confirmAdd();
+            }
+        }
+        // confirmation alert for add product
+        function confirmAdd() {
+            if (confirm("Are you sure you want to add this product?")) {
+                return window.location.href = '/';
+            }
+        }
+        // combine functions
+        function allFunctions() {
+            if (!confirmMax()) {
+                return false;
+            }
+            if (!confirmQuantity()) {
+                return false;
+            }
+            return confirmAdd();
         }
     </script>
 </head>
@@ -20,7 +54,7 @@
     <header>
         <nav id="navbar">
             <div class="mainMenu">
-                <div class= "nonDrop">
+                <div class="nonDrop">
                     <div>
                         <a href="\"><button id="buttonDrop">Products</button></a>
                     </div>
@@ -58,7 +92,7 @@
             <table class="table">
                 <br />
                 <br />
-                <form action="/addProduct" method="POST" onsubmit="return addProduct()">
+                <form action="/addProduct" method="POST" onsubmit=" returnallFunctions()">
                     <fieldset>
                         <legend>Product Specifications</legend>
                         <br />
@@ -93,8 +127,7 @@
                         <br />
                         <div>
                             <label for="wholesale">Wholesale Price:</label>
-                            <input type="text" name="wholesale" required id="wholesale"
-                                placeholder="10.00" />
+                            <input type="text" name="wholesale" required id="wholesale" placeholder="10.00" />
                         </div>
                         <br />
                         <br />
@@ -112,20 +145,22 @@
                         <br />
                         <div>
                             <label for="maxstock">Maximum Threshold:</label>
-                            <input type="range" name="maxstock" value="100" min="1" max="100" oninput="this.nextElementSibling.value = this.value">
+                            <input type="range" name="maxstock" value="100" min="1" max="100"
+                                oninput="this.nextElementSibling.value = this.value">
                             <output>100</output>
                         </div>
                         <br />
                         <br />
                         <div>
                             <label for="minstock">Minimum Threshold:</label>
-                            <input type="range" name="minstock" value="0" min="0" max="100" oninput="this.nextElementSibling.value = this.value">
+                            <input type="range" name="minstock" value="0" min="0" max="100"
+                                oninput="this.nextElementSibling.value = this.value">
                             <output>0</output>
                         </div>
                         <br />
                         <br />
                         <div>
-                            <input type="submit" name="submit" class="logout" value="Add Product"
+                            <input type="submit" name="submit" class="logout" value="Submit"
                                 style="float:right;margin-right: 20px;"></button>
                         </div>
                     </fieldset>

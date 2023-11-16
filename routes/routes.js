@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Add Product Page messages NEEDS FIXING
+// Add Product Page messages
 router.get('/addProduct', async (req, res) => {
     const messages = await req.consumeFlash('info');
     res.render('addProduct', messages);
