@@ -122,7 +122,7 @@ router.get('/fulfillOrder/:id', async (req, res) => {
     }
 });
 
-// Fulfill Client Order POST Route
+// Fix this post route such that it allows for multiple client orders to update the projectedStockQuantity with multiple client orders
 router.post('/fulfillOrder', async (req, res) => {
     console.log(req.body);
 

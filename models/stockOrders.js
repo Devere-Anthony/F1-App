@@ -12,6 +12,10 @@ const stockOrdersSchema = new Schema({
     sorderquantity: {
         type: Number,
     },
+    projectedStockQuantity: {
+        type: Number,
+        ref: 'products',
+    },
     date: {
         type: Date,
         default: () => Date.now(),
