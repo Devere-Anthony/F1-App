@@ -24,6 +24,7 @@ router.get('/addProduct', async (req, res) => {
 });
 
 // Add Product POST Route
+// Add Product POST Route
 router.post('/addProduct', async (req, res) => {
     console.log(req.body);
 
@@ -47,15 +48,14 @@ router.post('/addProduct', async (req, res) => {
         // Handle validation error here
         console.error(validationError);
         // You can return an error message or redirect back to the form with an error message.
-        await req.flash('error', validationError.message);
-        res.redirect('/addProduct');
+        res.render('addProduct', { errors: validationError.errors });
     } else {
         try {
             await newProduct.save();
-            await req.flash('info', 'Product added successfully!');
             res.redirect('/');
         } catch (error) {
             console.error(error);
+            res.render('addProduct', { errors: error });
         }
     }
 });
