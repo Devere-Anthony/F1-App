@@ -6,45 +6,11 @@
     <title>Products | F1 Coffee Roasters IMS</title>
     <link rel="stylesheet" href="/stylesheets/styles.css" type="text/css" />
     <script>
-        // confirms the max value is greater than the min value
-        function confirmMax() {
-            var max = document.getElementById("maxstock").value;
-            var min = document.getElementById("minstock").value;
-            if (max < min) {
-                alert("Maximum threshold must be greater than minimum threshold.");
-                return false;
-            }
-            else {
-                return confirmAdd();
-            }
-        }
-        // confirms the quantity is less than the max value
-        function confirmQuantity() {
-            var max = document.getElementById("maxstock").value;
-            var quantity = document.getElementById("quantity").value;
-            if (quantity > max) {
-                alert("Quantity must be less than the maximum threshold.");
-                return false;
-            }
-            else {
-                return confirmAdd();
-            }
-        }
         // confirmation alert for add product
         function confirmAdd() {
             if (confirm("Are you sure you want to add this product?")) {
                 document.getElementById("addProduct").submit();
             }
-        }
-        // combine functions
-        function allFunctions() {
-            if (!confirmMax()) {
-                return false;
-            }
-            if (!confirmQuantity()) {
-                return false;
-            }
-            return confirmAdd();
         }
     </script>
 </head>
@@ -85,96 +51,95 @@
             <a href="\"><button class="logout" style="float:right;margin-right: 20px;">Cancel</button></a>
         </h3>
         <br />
-        <% if (typeof errors !=='undefined' ) { %>
-            <% for (var error in errors) { %>
-                <p>
-                    <%= errors[error].message %>
-                </p>
-                <% } %>
+        <div style="display: flex; justify-content: center;">
+            <div class="error" style="text-align: center;">
+                <% if (typeof errors !=='undefined' ) { %>
+                    <% for (var error in errors) { %>
+                        <p>
+                            <%= errors[error].message %>
+                        </p>
                     <% } %>
-                        <div class=" mainTable">
-                            <table class="table">
-                                <br />
-                                <br />
-                                <form action="/addProduct" method="POST" onsubmit=" return allFunctions()"
-                                    id="addProduct">
-                                    <fieldset>
-                                        <legend>Product Specifications</legend>
-                                        <br />
-                                        <br />
-                                        <br />
-                                        <div> <label for="productName">Product Name:</label>
-                                            <input type="text" name="productName" required id="productName"
-                                                placeholder="Ethiopian Natural" />
-                                        </div>
-                                        <br />
-                                        <br />
-                                        <div><label>Barcode:</label>
-                                            <input type="text" name="barcode" id="barcode" required
-                                                placeholder="8095632" />
-                                        </div>
-                                        <br />
-                                        <br />
-                                        <div>
-                                            <label for="category">Roast Category:</label>
-                                            <select id="category" name="category">
-                                                <option value="Light Roast">Light Roast</option>
-                                                <option value="Medium Roast">Medium Roast</option>
-                                                <option value="Dark Roast">Dark Roast</option>
-                                            </select>
-                                        </div>
-                                        <br />
-                                        <br />
-                                        <div>
-                                            <label for="retail">Retail Price:</label>
-                                            <input type="text" name="retail" required id="retail" placeholder="12.00" />
-                                        </div>
-                                        <br />
-                                        <br />
-                                        <div>
-                                            <label for="wholesale">Wholesale Price:</label>
-                                            <input type="text" name="wholesale" required id="wholesale"
-                                                placeholder="10.00" />
-                                        </div>
-                                        <br />
-                                        <br />
-                                        <div>
-                                            <label for="quantity">Quantity:</label>
-                                            <input type="number" name="quantity" required id="quantity"
-                                                placeholder="0" />
-                                        </div>
-                                        <br />
-                                        <br />
-                                        <div>
-                                            <label for="autorestock">Enable auto restock:</label>
-                                            <input type="checkbox" id="autorestock" name="autorestock" value="enabled"
-                                                checked />
-                                        </div>
-                                        <br />
-                                        <br />
-                                        <div>
-                                            <label for="maxstock">Maximum Threshold:</label>
-                                            <input type="range" name="maxstock" value="100" min="1" max="100"
-                                                oninput="this.nextElementSibling.value = this.value">
-                                            <output>100</output>
-                                        </div>
-                                        <br />
-                                        <br />
-                                        <div>
-                                            <label for="minstock">Minimum Threshold:</label>
-                                            <input type="range" name="minstock" value="0" min="0" max="100"
-                                                oninput="this.nextElementSibling.value = this.value">
-                                            <output>0</output>
-                                        </div>
-                                        <br />
-                                        <br />
-                                        <div>
-                                            <input type="submit" name="submit" class="logout" value="Submit"
-                                                style="float:right;margin-right: 20px;"></button>
-                                        </div>
-                                    </fieldset>
-                                </form>
+                <% } %>
+            </div>
+        </div>
+        <div class=" mainTable">
+            <table class="table">
+                <br />
+                <br />
+                <form action="/addProduct" method="POST" onsubmit=" return confirmAdd()" id="addProduct">
+                    <fieldset>
+                        <legend>Product Specifications</legend>
+                        <br />
+                        <br />
+                        <br />
+                        <div> <label for="productName">Product Name:</label>
+                            <input type="text" name="productName" required id="productName"
+                                placeholder="Ethiopian Natural" />
                         </div>
+                        <br />
+                        <br />
+                        <div><label>Barcode:</label>
+                            <input type="text" name="barcode" id="barcode" required placeholder="8095632" />
+                        </div>
+                        <br />
+                        <br />
+                        <div>
+                            <label for="category">Roast Category:</label>
+                            <select id="category" name="category">
+                                <option value="Light Roast">Light Roast</option>
+                                <option value="Medium Roast">Medium Roast</option>
+                                <option value="Dark Roast">Dark Roast</option>
+                            </select>
+                        </div>
+                        <br />
+                        <br />
+                        <div>
+                            <label for="retail">Retail Price:</label>
+                            <input type="text" name="retail" required id="retail" placeholder="12.00" />
+                        </div>
+                        <br />
+                        <br />
+                        <div>
+                            <label for="wholesale">Wholesale Price:</label>
+                            <input type="text" name="wholesale" required id="wholesale" placeholder="10.00" />
+                        </div>
+                        <br />
+                        <br />
+                        <div>
+                            <label for="quantity">Quantity:</label>
+                            <input type="number" name="quantity" required id="quantity" placeholder="0" />
+                        </div>
+                        <br />
+                        <br />
+                        <div>
+                            <label for="autorestock">Enable auto restock:</label>
+                            <input type="checkbox" id="autorestock" name="autorestock" value="enabled" checked />
+                        </div>
+                        <br />
+                        <br />
+                        <div>
+                            <label for="maxstock">Maximum Threshold:</label>
+                            <input type="range" name="maxstock" value="100" min="1" max="100"
+                                oninput="this.nextElementSibling.value = this.value">
+                            <output>100</output>
+                        </div>
+                        <br />
+                        <br />
+                        <div>
+                            <label for="minstock">Minimum Threshold:</label>
+                            <input type="range" name="minstock" value="0" min="0" max="100"
+                                oninput="this.nextElementSibling.value = this.value">
+                            <output>0</output>
+                        </div>
+                        <br />
+                        <br />
+                        <div>
+                            <input type="submit" name="submit" class="logout" value="Submit"
+                                style="float:right;margin-right: 20px;"></button>
+                        </div>
+                    </fieldset>
+                </form>
+        </div>
     </main>
 </body>
 

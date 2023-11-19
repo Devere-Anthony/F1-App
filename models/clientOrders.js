@@ -1,6 +1,12 @@
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
+
+const corderValidator = function (value) {
+    return value >= 0 && value <= this.quantity;
+};
+
+
 const clientOrdersSchema = new Schema({
     clientorderID: {
         type: String,
@@ -11,6 +17,7 @@ const clientOrdersSchema = new Schema({
     },
     corderquantity: {
         type: Number,
+        validate: [corderValidator, 'Order quantity must be less than the current stock quantity']
     },
     quantity: {
         type: Number,

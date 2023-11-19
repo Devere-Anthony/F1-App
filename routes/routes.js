@@ -24,7 +24,6 @@ router.get('/addProduct', async (req, res) => {
 });
 
 // Add Product POST Route
-// Add Product POST Route
 router.post('/addProduct', async (req, res) => {
     console.log(req.body);
 
@@ -74,21 +73,25 @@ router.get('/setStockProduct/:id', async (req, res) => {
 // Update Product PUT Route
 router.put('/setStockProduct/:id', async (req, res) => {
     try {
-        await products.findByIdAndUpdate(req.params.id, {
-            productID: req.body.productID,
-            productName: req.body.productName,
-            barcode: req.body.barcode,
-            category: req.body.category,
-            retail: req.body.retail,
-            wholesale: req.body.wholesale,
-            quantity: req.body.quantity,
-            autorestock: req.body.autorestock,
-            maxstock: req.body.maxstock,
-            minstock: req.body.minstock,
-        });
+        let product = await products.findById(req.params.id);
+        if (!product) {
+            throw new Error('Product not found');
+        }
+        for (let key of ['productID', 'productName', 'barcode', 'category', 'retail', 'wholesale', 'autorestock', 'maxstock', 'minstock']) {
+            if (req.body[key]) {
+                product[key] = req.body[key];
+            }
+        }
+        // Update quantity last
+        if (req.body.quantity) {
+            product.quantity = req.body.quantity;
+        }
+        await product.save();
         res.redirect(`/`);
     } catch (error) {
         console.log(error);
+        const product = await products.findById(req.params.id);
+        res.render('setStockProduct', { errors: error.errors, products: product });
     }
 });
 
