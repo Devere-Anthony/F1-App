@@ -95,8 +95,28 @@ router.put('/setStockProduct/:id', async (req, res) => {
 // Stock Order
 router.get('/stockOrders', async (req, res) => {
     try {
+        // Get Stock Order info
         const allStockOrders = await stockOrders.find();
         res.render('stockOrders', { stockOrders: allStockOrders });
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+// Stock Order POST Route
+router.post('/stockOrders/:productID', async (req, res) => {
+    try {
+        // Get Product info
+        const currentProductDetails = await products.findOne({ productID: req.params.productID });
+
+        // Project new quantity
+        const projectedStockQuantity = currentProductDetails.quantity + req.body.sorderquantity;
+
+        // Update product document data with projected stock quantity
+        currentProductDetails.projectedStockQuantity = projectedStockQuantity;
+        await currentProductDetails.save(); // Save the updated product document
+
+        res.redirect('/');
     } catch (error) {
         console.log(error);
     }
@@ -142,7 +162,7 @@ router.post('/fulfillOrder', async (req, res) => {
            then the order can't be fulfilled and we need to handle this issue
            before allowing garbage data to populate the data store
         */
-        if (projectedStockQuantity < 0){
+        if (projectedStockQuantity < 0) {
             res.redirect('/');
             console.log("false");
             return false;
