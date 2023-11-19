@@ -5,6 +5,14 @@
     <meta charset="UTF-8" />
     <title>Fulfill Client Orders | F1 Coffee Roasters IMS</title>
     <link rel="stylesheet" href="/stylesheets/styles.css" type="text/css" />
+    <script>
+        // confirmation alert for fulfill order
+        function confirmOrder() {
+            if (confirm("Are you sure you want to fulfill this order?")) {
+                document.getElementById("clientOrder").submit();
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -43,8 +51,17 @@
             <a href="\"><button class="logout" style="float:right;margin-right: 20px;">Cancel</button></a>
         </h3>
         <br>
+        <div style="display: flex; justify-content: center;">
+<div class="error" style="text-align: center;">
+    <% if (typeof errors !=='undefined' ) { %>
+        <p>
+            <%= errors %>
+        </p>
+    <% } %>
+</div>
+        </div>
         <div class="mainTable">
-            <form action="/fulfillOrder" method="POST">
+            <form action="/fulfillOrder" method="POST" onsubmit=" return confirmOrder()" id="clientOrder">
                 <table class="table" id="fulfillOrder">
                     <fieldset>
                         <br />
@@ -58,8 +75,13 @@
                         <br />
                         <div>
                             <label>Current Stock Quantity:</label>
-                            <input type="number" name="quantity" required id="quantity" placeholder="0"
-                                value="<%= products.quantity %>" />
+                            <% if (products.projectedStockQuantity !=null) { %>
+                                <%= products.projectedStockQuantity %>
+                            <% } else { %>
+                                <!-- Handle the case when projectedStockQuantity is not available -->
+                                <%= products.quantity %>
+                            <% } %>
+                        </div>
                         </div>
                         <br />
                         <div>

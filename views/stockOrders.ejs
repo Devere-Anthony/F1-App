@@ -5,6 +5,15 @@
     <meta charset="UTF-8" />
     <title>Stock Orders | F1 Coffee Roasters IMS</title>
     <link rel="stylesheet" href="/stylesheets/styles.css" type="text/css" />
+    <script>
+        // confirmation alert for restock
+        function confirmRestock() {
+            if (confirm("Are you sure you want to restock this product?")) {
+                document.getElementById('productID').value = productID;
+                document.getElementById("restock").submit();
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -44,42 +53,42 @@
         </h3>
         <br />
         <div class="mainTable">
-            <table class="table" id="stockOrderList">
-                <form action="/index" method="POST">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Stock Order ID</th>
-                                <th>Product ID</th>
-                                <th>Quantity</th>
-                                <th>Date</th>
-                                <th style="text-align: center;">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% stockOrders.forEach(element=> { %>
-                                <tr>
-                                    <td>
-                                        <%= element.stockorderID %>
-                                    </td>
-                                    <td>
-                                        <%= element.productID %>
-                                    </td>
-                                    <td>
-                                        <%= element.sorderquantity %>
-                                    </td>
-                                    <td>
-                                        <%= element.date %>
-                                    </td>
-                                    <td>
-                                        <input type="submit" name="submit" class="logout" value="Restock"
-                                style="float:right;margin-right: 20px;"></button>
-                                    </td>
-                                </tr>
-                                <% }) %>
-                        </tbody>
-                    </table>
-                </form>
+            <table class="table">
+                <br />
+                <br />
+                <thead>
+                    <tr>
+                        <th>Stock Order ID</th>
+                        <th>Product ID</th>
+                        <th>Quantity</th>
+                        <th>Date</th>
+                        <th style="text-align: center;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% stockOrders.forEach(element=> { %>
+                        <tr>
+                            <form action="/stockOrders/" method="POST" onsubmit="return confirmRestock()" id="restock">
+                                <td>
+                                    <%= element.stockorderID %>
+                                </td>
+                                <td>
+                                    <%= element.productID %>
+                                    <input type="hidden" name="productID" value="<%= element.productID %>">
+                                </td>
+                                <td>
+                                    <%= element.sorderquantity %>
+                                </td>
+                                <td>
+                                    <%= element.date %>
+                                </td>
+                                <td>
+                                    <input type="submit" name="submit" class="logout" value="Restock" style="float:right;margin-right: 20px;">
+                                </td>
+                            </form>
+                        </tr>
+                    <% }) %>
+                </tbody>
             </table>
         </div>
     </main>

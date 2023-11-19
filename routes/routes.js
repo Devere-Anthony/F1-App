@@ -96,7 +96,7 @@ router.put('/setStockProduct/:id', async (req, res) => {
 });
 
 // Stock Order
-router.get('/stockOrders', async (req, res) => {
+router.get('/stockOrders/', async (req, res) => {
     try {
         // Get Stock Order info
         const allStockOrders = await stockOrders.find();
@@ -107,21 +107,23 @@ router.get('/stockOrders', async (req, res) => {
 });
 
 // Stock Order POST Route
-router.post('/stockOrders/:productID', async (req, res) => {
+router.post('/stockOrders/', async (req, res) => {
     try {
         // Get Product info
-        const currentProductDetails = await products.findOne({ productID: req.params.productID });
+        const currentProductDetails = await products.findOne({ productID: req.body.productID });
 
-        // Project new quantity
-        const projectedStockQuantity = currentProductDetails.quantity + req.body.sorderquantity;
+        if (!currentProductDetails) {
+            return res.status(404).send('Product not found');
+        }
 
-        // Update product document data with projected stock quantity
-        currentProductDetails.projectedStockQuantity = projectedStockQuantity;
+        // Update projectedStockQuantity with maxstock value
+        currentProductDetails.projectedStockQuantity = currentProductDetails.maxstock;
         await currentProductDetails.save(); // Save the updated product document
 
         res.redirect('/');
     } catch (error) {
         console.log(error);
+        res.status(500).send('Server Error');
     }
 });
 
@@ -145,13 +147,15 @@ router.get('/fulfillOrder/:id', async (req, res) => {
     }
 });
 
-// Fix this post route such that it allows for multiple client orders to update the projectedStockQuantity with multiple client orders
+// Fulfill Order POST Route
 router.post('/fulfillOrder', async (req, res) => {
     console.log(req.body);
 
+    let currentProductDetails;
+
     try {
         // Step 1: Get product info
-        const currentProductDetails = await products.findOne({ productID: req.body.productID });
+        currentProductDetails = await products.findOne({ productID: req.body.productID });
 
         if (!currentProductDetails) {
             return res.sendStatus(404);
@@ -166,9 +170,8 @@ router.post('/fulfillOrder', async (req, res) => {
            before allowing garbage data to populate the data store
         */
         if (projectedStockQuantity < 0) {
-            res.redirect('/');
             console.log("false");
-            return false;
+            return res.render('fulfillOrder', { errors: 'Order quantity must be less than the current stock quantity', products: currentProductDetails });
         }
 
         // Step 3: Fulfill order by saving a new fulfillment record
@@ -196,16 +199,12 @@ router.post('/fulfillOrder', async (req, res) => {
             });
             await newStockOrder.save();
         }
-        res.redirect('/');
         console.log("true")
-        return true
+        return res.redirect('/');
     } catch (error) {
         console.log(error);
-        return res.sendStatus(500);
+        return res.render('fulfillOrder', { errors: error.message, products: currentProductDetails });
     }
 });
-
-
-
 
 module.exports = router;
