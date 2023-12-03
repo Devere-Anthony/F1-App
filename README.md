@@ -10,3 +10,20 @@ Devere Weaver
 Swadha Bhatt
 
 Victoria George
+
+## Description
+
+This project is an inventory management system web application. It allows the users to keep track of the inventory for a coffee roasting service. 
+
+## Installation instructions
+
+The webapp itself is hosted on Heroku which is a webapp hosting service that allows for simplified deployments. Heroku also offers the ability to build the webapp without having to manually generate a build script. 
+
+While the webapp is built and deployed by heroku, it can be installed and build on a local server. 
+
+To install and run on a local server:
+1. Clone this repository on a local machine. 
+2. Install Node.js. 
+3. Run 'npm install' in the local machine's terminal where the file package.json is located to install the dependencies located in the package.json file. 
+4. After the packages and dependencies have been installed, run the command 'node index.js' to start the application on the local server. 
+5. Navigate to http://localhost:3000 in your browser of choice to see the application. 
