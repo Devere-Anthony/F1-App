@@ -4,11 +4,10 @@ const stockOrders = require("../models/stockOrders");
 
 // Fulfill Client Order POST Route
 function fulfillOrder(currentProduct, order) {
-    //console.log(req.body);
+    console.log(currentProduct);
 
     try {
         // Step 1: Get product info
-        //const currentProductDetails = await products.findOne({ productID: req.body.productID });
         const currentProductDetails = currentProduct;
 
         if (!currentProductDetails) {
@@ -18,16 +17,9 @@ function fulfillOrder(currentProduct, order) {
         }
 
         // Step 2: Project new quantity
-        //const projectedStockQuantity = currentProductDetails.quantity - req.body.corderquantity;
         const projectedStockQuantity = currentProductDetails.quantity - order.corderquantity;
 
-        /* Here is where we shouldn't allow for invalid orders, 
-           so if the customer order quantity is greater than the current quantity,
-           then the order can't be fulfilled and we need to handle this issue
-           before allowing garbage data to populate the data store
-        */
-        if (projectedStockQuantity < 0){
-            //res.redirect('/');
+        if (projectedStockQuantity < 0){   // bad order
             console.log("ERROR: Attempting to order more than available.");
             return false;    // unsuccussful update
         }
@@ -58,15 +50,12 @@ function fulfillOrder(currentProduct, order) {
             });
             newStockOrder.save();
         }
-        //res.redirect('/');
         console.log("SUCCESS: Order successfully processed!")    // successful update
         return true
     } 
-    catch (error) {
+    catch (error) {    // catchall
         console.log(error);
-        //return res.sendStatus(500);
-        //throw new Error("Homepage not found")
-        return false;
+        return false;    
     }
 };
 

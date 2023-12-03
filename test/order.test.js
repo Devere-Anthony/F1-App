@@ -42,7 +42,7 @@ describe("fulfillOrder", () => {
         expect(fulfillOrder(currentProduct, newclientOrder1)).toBe(false);
     });
 
-    /* Test case 1: Allow orders greater than current quanity */
+    /* Test case 2: Allow orders less than current quanity */
     test("returns true if order is greater than quantity", () => {
         expect(fulfillOrder(currentProduct, newclientOrder2)).toBe(true);
     });
