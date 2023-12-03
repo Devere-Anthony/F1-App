@@ -1,5 +1,4 @@
 # F1-App
----
 ## Team members
 
 Oladiran Apara
