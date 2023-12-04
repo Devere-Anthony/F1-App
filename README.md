@@ -15,6 +15,10 @@ Victoria George
 
 This project is an inventory management system web application. It allows the users to keep track of the inventory for a coffee roasting service. 
 
+## Github Page
+
+https://github.com/daw-r/F1-App
+
 ## Installation instructions
 
 The webapp itself is hosted on Heroku which is a webapp hosting service that allows for simplified deployments. Heroku also offers the ability to build the webapp without having to manually generate a build script. 
